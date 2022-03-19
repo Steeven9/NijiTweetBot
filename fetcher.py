@@ -12,20 +12,25 @@ if bearer_token == None:
 client = Client(bearer_token, wait_on_rate_limit=True)
 
 # Matches tweets that
-# - have the keyword "schedule" in it
-# - are not retweets
-# - have an image attached
+# - have the keyword "schedule" in it and an image attached
+#   OR have the keyword "guerrilla"
 # - are from the talents below
 
-talents = [
-    "sonny_brisko", "Fulgur_Ovid", "Yugo_Asuma", "uki_violeta", "alban_knox",
-    "luca_kaneshiro", "Vox_Akuma", "Mysta_Rias", "ike_eveland", "shu_yamino",
-    "EnnaAlouette", "ReimuEndou", "NinaKosaka", "MillieParfait", "Petra_Gurin",
-    "Rosemi_Lovelock", "Selen_Tatsuki", "PomuRainpuff", "EliraPendora",
-    "FinanaRyugu"
+talents = ["PomuRainpuff", "EliraPendora", "FinanaRyugu"]
+talents += [
+    "Petra_Gurin",
+    "Rosemi_Lovelock",
+    "Selen_Tatsuki",
+]
+talents += ["EnnaAlouette", "ReimuEndou", "NinaKosaka", "MillieParfait"]
+talents += [
+    "luca_kaneshiro", "Vox_Akuma", "Mysta_Rias", "ike_eveland", "shu_yamino"
+]
+talents += [
+    "sonny_brisko", "Fulgur_Ovid", "Yugo_Asuma", "uki_violeta", "alban_knox"
 ]
 
-query = "schedule -is:retweet has:media (from:"
+query = "guerrilla OR (schedule has:media) (from:"
 query += " OR from:".join(talents)
 query += ")"
 

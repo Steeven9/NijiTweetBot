@@ -1,4 +1,4 @@
-# <img src="logo.png" width="100"> NijiTweetBot
+# NijiTweetBot
 
 [![](https://img.shields.io/github/license/Steeven9/NijiTweetBot)](/LICENSE)
 [![python CI](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml)
