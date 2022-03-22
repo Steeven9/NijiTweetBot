@@ -30,7 +30,7 @@ talents += [
     "sonny_brisko", "Fulgur_Ovid", "Yugo_Asuma", "uki_violeta", "alban_knox"
 ]
 
-query = "((guerrilla OR guerilla) OR (schedule has:media)) (from:"
+query = "-is:retweet ((guerrilla OR guerilla) OR (schedule has:media)) (from:"
 query += " OR from:".join(talents)
 query += ")"
 
