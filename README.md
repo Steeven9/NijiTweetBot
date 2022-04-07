@@ -1,4 +1,4 @@
-# NijiTweetBot
+# <img src="logo.jpg" width="100"> NijiTweetBot
 
 [![](https://img.shields.io/github/license/Steeven9/NijiTweetBot)](/LICENSE)
 [![python CI](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml)
@@ -6,6 +6,8 @@
 
 A simple Discord bot to fetch schedule-related Nijisanji tweets to
 feed our [schedule](https://nijien.vercel.app).
+
+Profile picture by the amazing [L_YTH](https://twitter.com/lost_yth)!
 
 ## Setup
 
