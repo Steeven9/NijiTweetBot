@@ -78,9 +78,11 @@ async def get_and_send_tweets(channel, debug_channel):
         for tweet in tweets:
             if "RT @" in tweet.text[:4]:
                 result += "[{0}] ".format(get_rt_text(tweet))
-            if "schedule" in tweet.text.lower():
+            if "schedule" in tweet.text.lower(
+            ) or "weekly" in tweet.text.lower():
                 result += "Schedule tweet"
-            elif "guerilla" in tweet.text.lower() or "guerrilla" in tweet.text.lower():
+            elif "guerilla" in tweet.text.lower(
+            ) or "guerrilla" in tweet.text.lower():
                 result += "Guerilla tweet"
             else:
                 result += "Tweet"

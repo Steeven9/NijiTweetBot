@@ -11,9 +11,10 @@ if bearer_token == None:
     raise ValueError("Twitter bearer token not found!")
 client = Client(bearer_token, wait_on_rate_limit=True)
 
-# Matches tweets that
-# - have the keyword "schedule" in it and an image attached
-#   OR have the keyword "guerrilla"
+# Matches tweets that:
+# - have the keyword "schedule" or "weekly" in them and have an image attached
+#   OR have the keyword "guerrilla" or "guerilla" in them
+# - are not retweets
 # - are from the talents below
 
 talents = ["PomuRainpuff", "EliraPendora", "FinanaRyugu"]
@@ -30,7 +31,7 @@ talents += [
     "sonny_brisko", "Fulgur_Ovid", "Yugo_Asuma", "uki_violeta", "alban_knox"
 ]
 
-query = "-is:retweet ((guerrilla OR guerilla) OR ((schedule OR weekly) has:media)) (from:"
+query = "-is:retweet ((guerrilla OR guerilla) OR ((schedule OR #PetraOnAir OR weekly) has:media)) (from:"
 query += " OR from:".join(talents)
 query += ")"
 
