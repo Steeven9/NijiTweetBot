@@ -85,7 +85,7 @@ async def send_message(data, channel, tweets_fetched):
     if channel_id == "945792387337298060":
         # Specific ping for NEST
         schedule_ping = utils.get(channel.guild.roles, id=945794066900213830)
-        result = f"{schedule_ping.mention} "
+        result = "{0} ".format(schedule_ping.mention)
     else:
         result = ""
     tweets = data.data
@@ -115,14 +115,14 @@ async def send_message(data, channel, tweets_fetched):
         i += 1
 
     # Log event
-    print(ct, "-", tweets_fetched, "found from", users_string)
+    print("{0} - {1} found from {2}".format(ct, tweets_fetched, users_string))
 
     # Send Discord message
     try:
         await channel.send(result)
     except errors.HTTPException:
-        print(ct, "-", tweets_fetched, "from", users_string,
-              "skipped due to length")
+        print("{0} - {1} skipped due to length from {2}".format(
+            ct, tweets_fetched, users_string))
         await channel.send(
             "Too many characters to send in one message, skipping {0} tweets from {1}"
             .format(tweets_fetched, users_string))
@@ -153,6 +153,9 @@ async def on_ready():
 )
 async def nijitweets(ctx):
     global debug_channel_id
+    ct = datetime.now()
+    print("{0} - Command called from server {1} by {2}".format(
+        ct, ctx.guild_id, ctx.author))
     debug_channel = client.get_channel(int(debug_channel_id))
     tweets_fetched = await get_and_send_tweets(ctx, debug_channel)
     if tweets_fetched == 0:
