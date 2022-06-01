@@ -86,6 +86,10 @@ async def send_message(data, channel, tweets_fetched):
         # Specific ping for NEST
         schedule_ping = utils.get(channel.guild.roles, id=945794066900213830)
         result = "{0} ".format(schedule_ping.mention)
+    elif channel_id == "980608534200877096":
+        # Specific ping for Dragoon Project Squad
+        schedule_ping = utils.get(channel.guild.roles, id=981447377967796224)
+        result = "{0} ".format(schedule_ping.mention)
     else:
         result = ""
     tweets = data.data
@@ -93,6 +97,11 @@ async def send_message(data, channel, tweets_fetched):
     i = 1
     users_string = ""
     for tweet in tweets:
+        # Specific for Dragoon Project Squad
+        if channel_id == "980608534200877096" and users[
+                tweet.author_id].username != "Selen_Tatsuki":
+            continue
+
         if "RT @" in tweet.text[:4]:
             result += "[{0}] ".format(get_rt_text(tweet))
 
@@ -118,14 +127,15 @@ async def send_message(data, channel, tweets_fetched):
     print("{0} - {1} found from {2}".format(ct, tweets_fetched, users_string))
 
     # Send Discord message
-    try:
-        await channel.send(result)
-    except errors.HTTPException:
-        print("{0} - {1} skipped due to length from {2}".format(
-            ct, tweets_fetched, users_string))
-        await channel.send(
-            "Too many characters to send in one message, skipping {0} tweets from {1}"
-            .format(tweets_fetched, users_string))
+    if (i > 1):
+        try:
+            await channel.send(result)
+        except errors.HTTPException:
+            print("{0} - {1} skipped due to length from {2}".format(
+                ct, tweets_fetched, users_string))
+            await channel.send(
+                "Too many characters to send in one message, skipping {0} tweets from {1}"
+                .format(tweets_fetched, users_string))
 
 
 @client.event
