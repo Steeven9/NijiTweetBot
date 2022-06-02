@@ -89,7 +89,8 @@ async def send_message(data, channel, tweets_fetched):
     elif channel_id == "980608534200877096":
         # Specific ping for Dragoon Project Squad
         schedule_ping = utils.get(channel.guild.roles, id=981447377967796224)
-        result = "{0} ".format(schedule_ping.mention)
+        print(channel.guild.roles)
+        result = ""  # "{0} ".format(schedule_ping.mention)
     else:
         result = ""
     tweets = data.data
