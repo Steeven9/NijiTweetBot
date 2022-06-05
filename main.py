@@ -56,7 +56,7 @@ async def get_and_send_tweets(channel, debug_channel):
     except TwitterServerError as err:
         err_string = "Twitter died: {0}".format(err)
         print(ct, err_string)
-        await debug_channel.send(err_string)
+        #await debug_channel.send(err_string)
         return
     except BadRequest as err:
         err_string = "API error: {0}".format(err)
@@ -67,9 +67,14 @@ async def get_and_send_tweets(channel, debug_channel):
     if tweets_fetched != 0:
         await send_message(tweets, channel, tweets_fetched)
     if spaces_fetched != 0:
-        # TODO examine the data and see what it returns
         print(spaces)
-        await send_message(spaces, debug_channel, spaces_fetched)
+        users = {user["id"]: user for user in spaces.includes["users"]}
+        result = ""
+        for space in spaces:
+            result += "{0} is live with a space! https://twitter.com/i/spaces/{1}".format(
+                users[space.author_id].username, space.id)
+        print(result)
+        await channel.send(result)
 
     # Save latest ID to file
     f = open(filename, "w")
