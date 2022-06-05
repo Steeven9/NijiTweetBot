@@ -69,12 +69,18 @@ async def get_and_send_tweets(channel, debug_channel):
     if spaces_fetched != 0:
         print(spaces)
         users = {user["id"]: user for user in spaces.includes["users"]}
-        result = ""
+        result = get_channel_ping(channel)
         for space in spaces:
-            result += "{0} is live with a space! https://twitter.com/i/spaces/{1}".format(
+            # Specific for Dragoon Project Squad
+            if channel_id == "980608534200877096" and users[
+                    space.author_id].username != "Selen_Tatsuki":
+                continue
+
+            result += "{0} is live with a space! https://twitter.com/i/spaces/{1}\n".format(
                 users[space.author_id].username, space.id)
         print(result)
-        await channel.send(result)
+        await channel.send(result + "\n\n(beta feature, might be broken)"
+                           )  # TODO remove this one day
 
     # Save latest ID to file
     f = open(filename, "w")
@@ -87,16 +93,7 @@ async def get_and_send_tweets(channel, debug_channel):
 async def send_message(data, channel, tweets_fetched):
     ct = datetime.now()
     # Construct message
-    if channel_id == "945792387337298060":
-        # Specific ping for NEST
-        schedule_ping = utils.get(channel.guild.roles, id=945794066900213830)
-        result = "{0} ".format(schedule_ping.mention)
-    elif channel_id == "980608534200877096":
-        # Specific ping for Dragoon Project Squad
-        schedule_ping = utils.get(channel.guild.roles, id=981360473003937824)
-        result = "{0} ".format(schedule_ping.mention)
-    else:
-        result = ""
+    result = get_channel_ping(channel)
     tweets = data.data
     users = {user["id"]: user for user in data.includes["users"]}
     i = 1
@@ -194,6 +191,21 @@ def get_rt_text(tweet):
         result += str(tweet)[:pos][pos - 1]
         pos += 1
     return result
+
+
+# Helper to get the proper ping
+def get_channel_ping(channel):
+    global channel_id
+    if channel_id == "945792387337298060":
+        # Specific ping for NEST
+        schedule_ping = utils.get(channel.guild.roles, id=945794066900213830)
+        return "{0} ".format(schedule_ping.mention)
+    elif channel_id == "980608534200877096":
+        # Specific ping for Dragoon Project Squad
+        schedule_ping = utils.get(channel.guild.roles, id=981360473003937824)
+        return "{0} ".format(schedule_ping.mention)
+    else:
+        return ""
 
 
 client.run(discord_token)
