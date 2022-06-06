@@ -68,16 +68,17 @@ async def get_and_send_tweets(channel, debug_channel):
         await send_message(tweets, channel, tweets_fetched)
     if spaces_fetched != 0:
         print(spaces)
+        print(users)
         users = {user["id"]: user for user in spaces.includes["users"]}
         result = get_channel_ping(channel)
         for space in spaces:
             # Specific for Dragoon Project Squad
             if channel_id == "980608534200877096" and users[
-                    space.author_id].username != "Selen_Tatsuki":
+                    0].username != "Selen_Tatsuki":
                 continue
 
             result += "{0} is live with a space! https://twitter.com/i/spaces/{1}\n".format(
-                users[space.author_id].username, space.id)
+                users[0].username, space.id)
         print(result)
         await channel.send(result + "\n\n(beta feature, might be broken)"
                            )  # TODO remove this one day
