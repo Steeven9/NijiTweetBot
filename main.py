@@ -68,8 +68,8 @@ async def get_and_send_tweets(channel, debug_channel):
         await send_message(tweets, channel, tweets_fetched)
     if spaces_fetched != 0:
         print(spaces)
-        print(users)
         users = {user["id"]: user for user in spaces.includes["users"]}
+        print(users)
         result = get_channel_ping(channel)
         for space in spaces:
             # Specific for Dragoon Project Squad
