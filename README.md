@@ -22,8 +22,7 @@ TWITTER_BEARER_TOKEN
 NIJITWEETBOT_TOKEN
 ```
 
-You will also need to set the `NIJITWEETBOT_CHANNEL` variable with the
-Discord channel ID where you want the messages to be sent to.
+The configuration used for scraping and notifying is stored in the `data.py` file.
 
 Finally, run `python main.py`.
 
