@@ -39,14 +39,14 @@ except FileNotFoundError:
 client = commands.Bot(prefix)
 slash = SlashCommand(client, sync_commands)
 if channel_id == None:
-    raise ValueError("Channel ID not found!")
+    raise ValueError("[{0}] Channel ID not found!".format(bot_name))
 if discord_token == None:
-    raise ValueError("Discord bot token not found!")
+    raise ValueError("[{0}] Discord bot token not found!".format(bot_name))
 talents_data = []
 
 
 async def get_and_send_tweets(channel, debug_channel):
-    global newest_id, talents_data, role_id
+    global newest_id
     ct = datetime.now()
     try:
         [tweets, tweets_fetched,
@@ -87,7 +87,6 @@ async def get_and_send_tweets(channel, debug_channel):
 
 
 async def send_message(data, channel, tweets_fetched):
-    global role_id
     ct = datetime.now()
     # Construct message
     schedule_ping = utils.get(channel.guild.roles, id=role_id)
@@ -157,7 +156,6 @@ async def on_ready():
     description="Get new tweets",
 )
 async def nijitweets(ctx):
-    global debug_channel_id
     ct = datetime.now()
     print("{0} - [{1}] Command called from server {2} by {3}".format(
         ct, bot_name, ctx.guild_id, ctx.author))
@@ -170,7 +168,6 @@ async def nijitweets(ctx):
 # Main loop that gets the tweets
 @tasks.loop(seconds=timeout)
 async def check_tweets():
-    global channel_id, debug_channel_id
     channel = client.get_channel(int(channel_id))
     debug_channel = client.get_channel(int(debug_channel_id))
     await get_and_send_tweets(channel, debug_channel)
