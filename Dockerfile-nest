@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN mv data-nest.py data.py
 
-CMD [ "python", "./main.py" ]
+CMD [ "python", "-u", "./main.py" ]
