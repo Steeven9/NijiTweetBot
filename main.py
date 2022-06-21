@@ -49,9 +49,12 @@ if discord_token == None:
     raise ValueError("[{0}] Discord bot token not found!".format(bot_name))
 talents_data = []
 
+# TODO remove
+existing_spaces = []
+
 
 async def get_and_send_tweets(channel, debug_channel):
-    global newest_id
+    global newest_id, existing_spaces
     try:
         [tweets, tweets_fetched,
          newest_id] = fetch_tweets(newest_id, talents_data)
@@ -77,24 +80,23 @@ async def get_and_send_tweets(channel, debug_channel):
         f.write(newest_id)
         f.close()
     if spaces_fetched != 0:
-        print(spaces)
-        users = {user["id"]: user for user in spaces.includes["users"]}
-        print(users)
+        print("1 " + str(spaces))
         schedule_ping = utils.get(channel.guild.roles, id=role_id)
         result = "{0} ".format(schedule_ping.mention)
-        f = open(spaces_file, "a")
-        existing_spaces = f.read().split("\n")
-        print(existing_spaces)
+        # f2 = open(spaces_file, "a")
+        # existing_spaces = f2.read().split("\n")
+        print("2 " + str(existing_spaces))
         i = 0
-        for space in spaces:
+        for space in spaces.data:
             if space.id not in existing_spaces:
                 result += "{0} has a {1} space! https://twitter.com/i/spaces/{2}\n".format(
-                    users[i].username, space.state, space.id)
+                    spaces.includes["users"][i].username, space.state,
+                    space.id)
                 # Save current space ID to file
-                f.write(space.id + "\n")
+                # f2.write(space.id + "\n")
+                existing_spaces.append(space.id)
                 i += 1
-        print(result)
-        if (i > 1):
+        if (i > 0):
             try:
                 await channel.send(result)
             except errors.HTTPException:
@@ -103,7 +105,7 @@ async def get_and_send_tweets(channel, debug_channel):
                 await channel.send(
                     "Too many characters to send in one message, skipping {0} spaces"
                     .format(tweets_fetched))
-        f.close()
+        # f2.close()
 
     return tweets_fetched + spaces_fetched
 
