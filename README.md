@@ -4,6 +4,9 @@
 [![python CI](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Steeven9/NijiTweetBot/actions/workflows/docker-image.yml)
 ![](https://img.shields.io/tokei/lines/github/Steeven9/NijiTweetBot)
 
+## :warning: DEPRECATED: this project has been moved to [ScheduleTweetBot](https://github.com/Steeven9/ScheduleTweetBot)
+
+\
 A simple Discord bot to fetch schedule-related Nijisanji tweets to
 feed our [schedule](https://nijien.vercel.app).
 
